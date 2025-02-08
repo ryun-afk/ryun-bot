@@ -4,36 +4,51 @@ import os
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-needle = cv.imread('image.png',cv.IMREAD_UNCHANGED)
-hay = cv.imread('image copy.png',cv.IMREAD_UNCHANGED)
+def findClickPosition(template_img_path, target_img_path, threshold = 0.5, debug_mode = 0):
 
-result = cv.matchTemplate(hay,needle,cv.TM_CCOEFF_NORMED)
-
-
-threshhold = 0.80
-locations = np.where(result >= threshhold)
-
-locations = [(x,y) for x,y in zip(locations[1],locations[0])]
-print(locations)
+    template = cv.imread(template_img_path,cv.IMREAD_UNCHANGED)
+    target = cv.imread(target_img_path,cv.IMREAD_UNCHANGED)
+    target_w = target.shape[1]
+    target_h = target.shape[0]
 
 
-if locations:
-    print('found')
+    result = cv.matchTemplate(template,target,cv.TM_CCOEFF_NORMED)
 
-    w = needle.shape[1]
-    h = needle.shape[0]
+    locations = np.where(result >= threshold)
+    locations = [(x,y) for x,y in zip(locations[1],locations[0])]
 
-    line_color = (0,255,0)
-    line_type = cv.LINE_4
 
+    rectangles = []
     for loc in locations:
-        topleft = loc
-        bottomright = (topleft[0]+w, topleft[1] +h)
+        rect = [int(loc[0]), int(loc[1]),target_w,target_h]
+        rectangles.append(rect)
 
-        cv.rectangle(hay,topleft,bottomright,line_color,line_type)
+    rectangles, weights = cv.groupRectangles(rectangles,1,0.5)
+    
+    points = []
 
-    cv.imshow('matches',hay)
-    cv.waitKey()
+    if len(rectangles):
+        for (x,y,w,h) in rectangles:
+            center_x = x + int(w/2)
+            center_y = y + int(h/2)
+            points.append((center_x,center_y))
 
-else:
-    print('not found')
+            if debug_mode == 1:
+                marker_color = (0,0,255)
+                marker_type = cv.MARKER_CROSS
+                cv.drawMarker(template, (center_x,center_y), marker_color, marker_type)
+
+            if debug_mode == 2:
+                topleft = (x,y)
+                bottomright = (x+w,y+h)
+                line_color = (0,255,0)
+                line_type = cv.LINE_4
+                cv.rectangle(template,topleft,bottomright, line_color, line_type)
+
+        if debug_mode > 0:
+            cv.imshow('matches',template)
+            cv.waitKey()
+    
+    return points
+
+findClickPosition('image copy.png', 'image.png', debug_mode = 2)
