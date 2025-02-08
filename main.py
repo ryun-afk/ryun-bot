@@ -1,8 +1,26 @@
 import cv2 as cv
 import numpy as np
 import os
+from time import time
+import win32gui, win32ui, win32con, win32api
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+def window_capture():
+    width = win32api.GetSystemMetrics(0)
+    height = win32api.GetSystemMetrics(1)
+
+    #hwnd = win32gui,FindWindow(None, windowname)
+    hwnd = None
+    wDC = win32gui.GetWindowDC(hwnd)
+    dcObj = win32ui.CreateDCFromHandle(wDC)
+    cDC = dcObj.CreateCompatibleDC()
+    dataBitMap = win32ui.CreateBitmap()
+    dataBitMap.CreateCompatibleBitmap(dcObj,width,height)
+    cDC.SelectObject(dataBitMap)
+    cDC.BitBlt((0,0),(width,height),dcObj,(0,0),win32con.SRCCOPY)
+
+    dataBitMap.SaveBitmapFile(cDC,'debug.bmp')
 
 def findClickPosition(template_img_path, target_img_path, threshold = 0.5, debug_mode = 0):
 
@@ -51,4 +69,21 @@ def findClickPosition(template_img_path, target_img_path, threshold = 0.5, debug
     
     return points
 
-findClickPosition('image copy.png', 'image.png', debug_mode = 2)
+'''
+loop_time = time()
+while(True):
+    screenshot = ImageGrab.grab()
+    screenshot = np.array(screenshot)
+    screenshot = cv.cvtColor(screenshot,cv.COLOR_BGR2RGB)
+    
+    cv.imshow('cv', screenshot)
+    print('FPS {}'.format(1 / (time()-loop_time)))
+    loop_time = time()
+
+    if cv.waitKey(1) == ord('q'):
+        cv.destroyAllWindows()
+        break
+'''
+
+window_capture()
+print('Done')

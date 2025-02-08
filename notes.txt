@@ -1,4 +1,5 @@
 pipinstall opencv-python
+pipinstall pywin32
 
 opencv documentation:
 https://docs.opencv.org/4.x/index.html
