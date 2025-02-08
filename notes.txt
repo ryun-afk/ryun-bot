@@ -1,0 +1,6 @@
+pipinstall opencv-python
+
+opencv documentation:
+https://docs.opencv.org/4.x/index.html
+
+Use breakpoint and breakpoint to see variable data
