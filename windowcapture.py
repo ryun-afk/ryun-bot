@@ -3,18 +3,22 @@ import win32gui, win32ui, win32con, win32api
 
 class WindowCapture:
 
+    hwnd = None
     width = 0
     height = 0
-    hwnd = None
+    
 
 
     def __init__(self, window_name):
     
-        self.width = win32api.GetSystemMetrics(0)
-        self.height = win32api.GetSystemMetrics(1)
         self.hwnd = win32gui.FindWindow(None, window_name)
         if not self.hwnd:
             raise Exception('Window not foundL: {}'.format(window_name))
+        
+        window_size = win32gui.GetWindowRect(self.hwnd)
+        self.width = window_size[2] - window_size[0]
+        self.height = window_size[3] - window_size[1]
+
 
     def get_screenshot(self):
         
@@ -44,3 +48,12 @@ class WindowCapture:
         img = np.ascontiguousarray(img)
 
         return img
+    
+
+    @staticmethod
+    def list_window_names():
+        def winEnumHandler(hwnd,ctx):
+            if win32gui.IsWindowVisible(hwnd):
+                print(hex(hwnd),win32gui.GetWindowText(hwnd))
+        win32gui.EnumWindows(winEnumHandler,None)
+

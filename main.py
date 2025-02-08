@@ -4,15 +4,15 @@ from time import time
 from windowcapture import WindowCapture
 
 
+
 wincap = WindowCapture('Mabinogi')
-loop_time = time()
+WindowCapture.list_window_names()
+
 while(True):
     screenshot = wincap.get_screenshot()
     screenshot = np.array(screenshot)
     
     cv.imshow('cv', screenshot)
-    print('FPS {}'.format(1 / (time()-loop_time)))
-    loop_time = time()
 
     if cv.waitKey(1) == ord('q'):
         cv.destroyAllWindows()
@@ -20,7 +20,7 @@ while(True):
 print('Done')
 
 
-def findClickPosition(template_img_path, target_img_path, threshold = 0.5, debug_mode = 0):
+def find_click_position(template_img_path, target_img_path, threshold = 0.5, debug_mode = 0):
 
     template = cv.imread(template_img_path,cv.IMREAD_UNCHANGED)
     target = cv.imread(target_img_path,cv.IMREAD_UNCHANGED)
