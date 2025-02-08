@@ -3,4 +3,12 @@ pipinstall opencv-python
 opencv documentation:
 https://docs.opencv.org/4.x/index.html
 
-Use breakpoint and breakpoint to see variable data
+Use breakpoint and debugger to see variable data without printing
+
+
+# location[::-1] reverses list: [y],[x] -> [x],[y]
+# *location[] unpacks lists
+# zip(location[]) merges lists with same index
+#
+# [[y1,y2,...],[x1,x2,...]] --> [[x1,y1],[x2,y2],[...,...]] format
+locations = list(zip(*locations[::-1]))

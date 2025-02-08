@@ -13,13 +13,9 @@ result = cv.matchTemplate(hay,needle,cv.TM_CCOEFF_NORMED)
 threshhold = 0.80
 locations = np.where(result >= threshhold)
 
-# location[::-1] reverses list: [y],[x] -> [x],[y]
-# *location[] unpacks lists
-# zip(location[]) merges lists with same index
-#
-# [[y1,y2,...],[x1,x2,...]] --> [[x1,y1],[x2,y2],[...,...]] format
-locations = list(zip(*locations[::-1]))
+locations = [(x,y) for x,y in zip(locations[1],locations[0])]
 print(locations)
+
 
 if locations:
     print('found')
@@ -32,7 +28,7 @@ if locations:
 
     for loc in locations:
         topleft = loc
-        bottomright = (topleft[0]+w, topleft +h)
+        bottomright = (topleft[0]+w, topleft[1] +h)
 
         cv.rectangle(hay,topleft,bottomright,line_color,line_type)
 
