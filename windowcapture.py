@@ -1,5 +1,5 @@
 import numpy as np
-import win32gui, win32ui, win32con, win32api
+import win32gui, win32ui, win32con
 
 class WindowCapture:
 
@@ -9,11 +9,11 @@ class WindowCapture:
     
 
 
-    def __init__(self, window_name):
+    def __init__(self, window_name = win32gui.GetDesktopWindow()):
     
         self.hwnd = win32gui.FindWindow(None, window_name)
         if not self.hwnd:
-            raise Exception('Window not foundL: {}'.format(window_name))
+            raise Exception('Window not found: {}'.format(window_name))
         
         window_size = win32gui.GetWindowRect(self.hwnd)
         self.width = window_size[2] - window_size[0]
