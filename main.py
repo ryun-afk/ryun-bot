@@ -7,12 +7,14 @@ from vision import Vision
 
 #WindowCapture.list_window_names()
 wincap = WindowCapture('Mabinogi')
-vision_corn = Vision('image.png')
+vision_test = Vision('image.png')
 
 while(True):
     screenshot = wincap.get_screenshot()
 
-    points = vision_corn.find(screenshot,0.5,1)
+    rectangles = vision_test.find(screenshot)
+
+    cv.imshow('debug',vision_test.draw_rectangles(screenshot,rectangles))
 
     if cv.waitKey(1) == ord('q'):
         cv.destroyAllWindows()
