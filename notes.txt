@@ -13,3 +13,14 @@ Use breakpoint and debugger to see variable data without printing
 #
 # [[y1,y2,...],[x1,x2,...]] --> [[x1,y1],[x2,y2],[...,...]] format
 locations = list(zip(*locations[::-1]))
+
+HSV versus RGB
+RBG is an additive method to represent colors
+more red, green, or clue, makes the color brighter
+
+HSV uses hue, saturation, and value tp represent colors
+    Hue - angle of color on RGB circle
+    Saturation - amount of color used
+    Value - brightness of color
+helpul for isolating and detecting colors in a spectrum.
+    
