@@ -8,11 +8,12 @@ class WindowCapture:
     height = 0
 
 
-    def __init__(self, window_name = win32gui.GetDesktopWindow()):
+    def __init__(self, window_name = None):
     
         self.hwnd = win32gui.FindWindow(None, window_name)
         if not self.hwnd:
-            raise Exception('Window not found: {}'.format(window_name))
+            self.hwnd = win32gui.GetDesktopWindow()
+            
         
         window_size = win32gui.GetWindowRect(self.hwnd)
         self.width = window_size[2] - window_size[0]
@@ -58,4 +59,3 @@ class WindowCapture:
             if win32gui.IsWindowVisible(hwnd):
                 print(hex(hwnd),win32gui.GetWindowText(hwnd))
         win32gui.EnumWindows(winEnumHandler,None)
-

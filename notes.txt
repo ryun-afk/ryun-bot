@@ -24,3 +24,6 @@ HSV uses hue, saturation, and value tp represent colors
     Value - brightness of color
 helpul for isolating and detecting colors in a spectrum.
     
+
+keypoint_image = keypoint_image[y:y+h, x:x+w]
+[a:b,c:d] similar to excel for selecting parts of an image
