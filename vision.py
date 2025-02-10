@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
 from hsvfilter import HsvFilter
+from edgefilter import EdgeFilter
 
 class Vision:
     # constants
@@ -17,13 +18,6 @@ class Vision:
         self.target_img = cv.imread(target_img_path,self.method)
         self.target_w = self.target_img.shape[1]
         self.target_h = self.target_img.shape[0]
-
-        # TM_CCOEFF
-        # TM_CCOEFF_NORMED
-        # TM_CCORR
-        # TM_CCORR_NORMED
-        # TM_SQDIFF
-        #  TM_SQDIFF_NORMED
         self.method = method
 
 
@@ -122,6 +116,16 @@ class Vision:
         hsv_filter.vSub = cv.getTrackbarPos('VSub', self.TRACKBAR_WINDOW)
         return hsv_filter
     
+    def get_edge_filter_from_controls(self):
+        # Get current positions of all trackbars
+        edge_filter = EdgeFilter()
+        edge_filter.kernelSize = cv.getTrackbarPos('KernelSize', self.TRACKBAR_WINDOW)
+        edge_filter.erodeIter = cv.getTrackbarPos('ErodeIter', self.TRACKBAR_WINDOW)
+        edge_filter.dilateIter = cv.getTrackbarPos('DilateIter', self.TRACKBAR_WINDOW)
+        edge_filter.canny1 = cv.getTrackbarPos('Canny1', self.TRACKBAR_WINDOW)
+        edge_filter.canny2 = cv.getTrackbarPos('Canny2', self.TRACKBAR_WINDOW)
+        return edge_filter
+    
 
     def apply_hsv_filter(self, original_image, hsv_filter=None):
         # convert image to HSV
@@ -148,6 +152,22 @@ class Vision:
 
         # convert back to BGR for imshow() to display it properly
         img = cv.cvtColor(result, cv.COLOR_HSV2BGR)
+
+        return img
+    
+    def apply_edge_filter(self, original_image, edge_filter=None):
+        if not edge_filter:
+            edge_filter = self.get_edge_filter_from_controls()
+
+        kernel = np.ones((edge_filter.kernelSize, edge_filter.kernelSize), np.uint8)
+        eroded_image = cv.erode(original_image, kernel, iterations=edge_filter.erodeIter)
+        dilated_image = cv.dilate(eroded_image, kernel, iterations=edge_filter.dilateIter)
+
+        # canny edge detection
+        result = cv.Canny(dilated_image, edge_filter.canny1, edge_filter.canny2)
+
+        # convert single channel image back to BGR
+        img = cv.cvtColor(result, cv.COLOR_GRAY2BGR)
 
         return img
     

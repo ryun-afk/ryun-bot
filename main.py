@@ -7,22 +7,22 @@ from vision import Vision
 
 #WindowCapture.list_window_names()
 wincap = WindowCapture('Mabinogi')
-vision_test = Vision('image.png')
-vision_test.init_control_gui()
+
+# 14 66 241 179 80 250 0 0 0 0
+vision_map = Vision('img/map.png')
+vision_map.init_control_gui()
 
 while(True):
     screenshot = wincap.get_screenshot()
+    
+    output_image = vision_map.apply_hsv_filter(screenshot)
 
-    #object detection
-    rectangles = vision_test.find(screenshot)
-    points = vision_test.get_click_points(rectangles)
+    rectangles = vision_map.find(output_image)
+    output_image = vision_map.draw_rectangles(output_image,rectangles)
 
-    #draw on image
-    #output_image = vision_test.draw_click_points(screenshot,points)
-    output_image = vision_test.apply_hsv_filter(screenshot)
-
-    #display processed image
-    cv.imshow('debug',output_image)
+    #display
+    resized_map = cv.resize(output_image, (int(wincap.width/2), int(wincap.height/2)), interpolation=cv.INTER_AREA)
+    cv.imshow('map',resized_map)
 
     if cv.waitKey(1) == ord('q'):
         cv.destroyAllWindows()

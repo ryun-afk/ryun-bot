@@ -6,7 +6,6 @@ class WindowCapture:
     hwnd = None
     width = 0
     height = 0
-    
 
 
     def __init__(self, window_name = win32gui.GetDesktopWindow()):
@@ -18,6 +17,9 @@ class WindowCapture:
         window_size = win32gui.GetWindowRect(self.hwnd)
         self.width = window_size[2] - window_size[0]
         self.height = window_size[3] - window_size[1]
+
+        #self.width = int(self.width/2)
+        #self.height = int(self.height/2)
 
 
     def get_screenshot(self):
