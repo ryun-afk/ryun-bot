@@ -9,7 +9,6 @@ from hsvfilter import HsvFilter
 #WindowCapture.list_window_names()
 wincap = WindowCapture('Mabinogi')
 
-# 14 66 241 179 80 250 0 0 0 0
 vision_map = Vision('img/map.png')
 vision_map.init_control_gui()
 filter_map = HsvFilter(14,66,241,179,80,250,0,0,0,0)
@@ -28,9 +27,9 @@ while(True):
     # draw objects detected
     output_image = vision_map.draw_rectangles(screenshot,rectangles)
     
-
     # keypoint searching
     keypoint_image = edges_image
+
     # crop the image to remove the ui elements
     x, w, y, h = [200, 1130, 70, 750]
     keypoint_image = keypoint_image[y:y+h, x:x+w]
