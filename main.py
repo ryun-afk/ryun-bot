@@ -14,16 +14,16 @@ while(True):
     screenshot = wincap.get_screenshot()
 
     # resize images
-    scalar = .3
+    scalar = .5
     width = int(wincap.width*scalar)
     height = int(wincap.height*scalar)
     screenshot = cv.resize(screenshot, (width, height), interpolation=cv.INTER_AREA)
 
     rectangles = cascade_mobs.detectMultiScale(screenshot)
-    detection_image = vision_mobs.draw_rectangles(screenshot,rectangles)
+    screenshot = vision_mobs.draw_rectangles(screenshot,rectangles)
 
     # display image
-    cv.imshow('original', detection_image)
+    cv.imshow('original', screenshot)
 
     print('FPS {}'.format(1 / (time() - loop_time)))
     loop_time = time()
@@ -35,6 +35,6 @@ while(True):
     elif key == ord('y'):
         cv.imwrite('positive/{}.jpg'.format(loop_time), screenshot)
     elif key == ord('u'):
-        cv.imwrite('negative/{}.jpg'.format(loop_time), screenshot)
+        cv.imwrite('bg/{}.jpg'.format(loop_time), screenshot)
 
 print('Done')

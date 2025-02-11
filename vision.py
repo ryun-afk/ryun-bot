@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
-#from hsvfilter import HsvFilter
-#from edgefilter import EdgeFilter
+from hsvfilter import HsvFilter
+from edgefilter import EdgeFilter
 
 class Vision:
     # constants

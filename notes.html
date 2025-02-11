@@ -1,0 +1,43 @@
+pipinstall opencv-python
+pipinstall pywin32
+
+opencv documentation:
+https://docs.opencv.org/4.x/index.html
+
+
+# location[::-1] reverses list: [y],[x] -> [x],[y]
+# *location[] unpacks lists
+# zip(location[]) merges lists with same index
+#
+# [[y1,y2,...],[x1,x2,...]] --> [[x1,y1],[x2,y2],[...,...]] format
+locations = list(zip(*locations[::-1]))
+
+HSV versus RGB
+RBG is an additive method to represent colors
+more red, green, or clue, makes the color brighter
+
+HSV uses hue, saturation, and value tp represent colors
+    Hue - angle of color on RGB circle
+    Saturation - amount of color used
+    Value - brightness of color
+helpul for isolating and detecting colors in a spectrum.
+    
+
+keypoint_image = keypoint_image[y:y+h, x:x+w]
+
+
+Cascade training bash command reference:
+$ C:/Users/Ryan/Desktop/opencv/build/x64/vc15/bin/opencv_annotation.exe -annotations=positive.txt -images=positive/
+    looks up annotations text file
+    looks for images in a folder
+
+$ C:/Users/Ryan/Desktop/opencv/build/x64/vc15/bin/opencv_createsamples.exe -info positive.txt -w 20 -h 20 -num 1000 -vec positive.vec
+    reads text file and creates vec file
+    make note of created samples = number of rectangles
+
+$ C:/Users/Ryan/Desktop/opencv/build/x64/vc15/bin/opencv_traincascade.exe -data cascade/ -vec positive.vec -bg negative.txt -w 20 -h 20 -numPos 700 -numNeg 200 -numStages 5
+    data location to save layers
+    read vec file
+    read bg negative txt file
+    verify w and h matches w and h used in previous command
+    verify numPos is less than number of rectangles
