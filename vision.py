@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
-from hsvfilter import HsvFilter
-from edgefilter import EdgeFilter
+#from hsvfilter import HsvFilter
+#from edgefilter import EdgeFilter
 
 class Vision:
     # constants
@@ -15,10 +15,11 @@ class Vision:
 
 
     def __init__(self, target_img_path, method=cv.TM_CCOEFF_NORMED):
-        self.target_img = cv.imread(target_img_path,self.method)
-        self.target_w = self.target_img.shape[1]
-        self.target_h = self.target_img.shape[0]
-        self.method = method
+        if target_img_path:
+            self.target_img = cv.imread(target_img_path,self.method)
+            self.target_w = self.target_img.shape[1]
+            self.target_h = self.target_img.shape[0]
+            self.method = method
 
 
     def find(self, template_img, threshold = 0.5, max_results = 10):
