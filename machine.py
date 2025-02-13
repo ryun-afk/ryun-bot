@@ -15,7 +15,7 @@ class MachineState:
 class Machine:
     # constants
     INITIALIZING_SECONDS = 6
-    ACTION_SECONDS = 6
+    ACTION_SECONDS = 14
     MOVEMENT_STOPPED_THRESHOLD = 0.975
     IGNORE_RADIUS = 130
     
@@ -39,6 +39,11 @@ def __init__(self,window_offset,window_size):
     self.state = MachineState.INITIALIZING
     self.timestamp = time()
 
+def move(self):
+    pyautogui.hold('a',5)
+
+    return 
+
 # threading methods
 def update_targets(self, targets):
     self.lock.acquire()
@@ -57,5 +62,3 @@ def start(self):
 
 def stop(self):
     self.stopped = True
-
-    
