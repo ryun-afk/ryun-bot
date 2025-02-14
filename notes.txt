@@ -51,3 +51,5 @@ $ C:/Users/Ryan/Desktop/opencv/build/x64/vc15/bin/opencv_traincascade.exe -data 
     read bg negative txt file
     verify w and h matches w and h used in previous command
     verify numPos is less than number of rectangles
+
+    Think -> Act -> Observe
