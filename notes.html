@@ -1,15 +1,23 @@
 pip install opencv-python
 pip install pywin32
+
+# send commands
 pip install pyautogui
-    pip install pydirectinput
+pip install pydirectinput
+pip install keyboard
 
 opencv documentation:
 https://docs.opencv.org/4.x/index.html
 
 
+sorted() returns the list sorted
+set() returns an unordered collection of unique elements
+list() adds data to a list
+
+
 # location[::-1] reverses list: [y],[x] -> [x],[y]
 # *location[] unpacks lists
-# zip(location[]) merges lists with same index
+# zip(location[]) merges lists by index
 #
 # [[y1,y2,...],[x1,x2,...]] --> [[x1,y1],[x2,y2],[...,...]] format
 locations = list(zip(*locations[::-1]))
