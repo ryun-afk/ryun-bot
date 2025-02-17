@@ -49,7 +49,7 @@ $ C:/Users/Ryan/Desktop/opencv/build/x64/vc15/bin/opencv_traincascade.exe -data 
     data location to save layers
     read vec file
     read bg negative txt file
-    verify w and h matches w and h used in previous command
+    verify width and height matches width and height used in previous command
     verify numPos is less than number of rectangles
 
     Think -> Act -> Observe
