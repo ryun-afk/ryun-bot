@@ -53,3 +53,7 @@ $ C:/Users/Ryan/Desktop/opencv/build/x64/vc15/bin/opencv_traincascade.exe -data 
     verify numPos is less than number of rectangles
 
     Think -> Act -> Observe
+
+
+    https://scapy.net/
+    https://github.com/secdev/scapy
